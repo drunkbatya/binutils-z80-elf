@@ -5,7 +5,8 @@ LABEL org.opencontainers.image.source="https://github.com/drunkbatya/binutils-z8
 RUN apt update && apt -y install build-essential git make autoconf automake python3 xxd gettext
 ARG BINUTILS_VERSION=2.45
 
-ADD https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.xz /buildroot/src/
+RUN mkdir -p /buildroot/src
+RUN wget -O /buildroot/src/binutils-${BINUTILS_VERSION}.tar.xz https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.xz
 RUN tar -xvf /buildroot/src/binutils-${BINUTILS_VERSION}.tar.xz -C /buildroot/src/
 WORKDIR /configureroot
 RUN /buildroot/src/binutils-${BINUTILS_VERSION}/configure --target=z80-elf --prefix /outputroot
