@@ -1,5 +1,7 @@
 FROM ubuntu:24.04
 
+LABEL org.opencontainers.image.source="https://github.com/drunkbatya/binutils-z80-elf"
+
 RUN apt update && apt -y install build-essential git make autoconf automake python3 xxd gettext
 ARG BINUTILS_VERSION=2.45
 
