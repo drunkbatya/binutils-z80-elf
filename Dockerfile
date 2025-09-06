@@ -1,8 +1,8 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder
 
 LABEL org.opencontainers.image.source="https://github.com/drunkbatya/binutils-z80-elf"
 
-RUN apt update && apt -y install build-essential git make autoconf automake python3 xxd gettext wget
+RUN apt update && apt -y install build-essential git make autoconf automake wget
 ARG BINUTILS_VERSION=2.45
 
 RUN mkdir -p /buildroot/src
@@ -14,5 +14,9 @@ RUN /buildroot/src/binutils-${BINUTILS_VERSION}/configure --target=z80-elf --pre
 
 RUN make -j
 RUN make -j install
+
+FROM ubuntu:24.04 as output
+RUN apt update && apt -y install git make python3 xxd gettext
+COPY --from=builder /outputroot /outputroot
 
 ENV PATH="/outputroot/bin:$PATH"
