@@ -18,6 +18,6 @@ RUN make -j install
 FROM ubuntu:24.04 AS output
 RUN apt update && apt -y install git make python3 xxd gettext
 COPY --from=builder /outputroot /outputroot
-RUN echo -e "[safe]\n\tdirectory = *" > /root/.gitconfig
+RUN echo "[safe]\n\tdirectory = *" > /root/.gitconfig
 
 ENV PATH="/outputroot/bin:$PATH"
