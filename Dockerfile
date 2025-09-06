@@ -15,7 +15,7 @@ RUN /buildroot/src/binutils-${BINUTILS_VERSION}/configure --target=z80-elf --pre
 RUN make -j
 RUN make -j install
 
-FROM ubuntu:24.04 as output
+FROM ubuntu:24.04 AS output
 RUN apt update && apt -y install git make python3 xxd gettext
 COPY --from=builder /outputroot /outputroot
 RUN echo -e "[safe]\n\tdirectory = *" > /root/.gitconfig
